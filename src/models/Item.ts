@@ -1,3 +1,6 @@
+import Axios from "axios";
+import { url } from "utils/config";
+
 class Item {
   id: number;
   name: string;
@@ -35,8 +38,18 @@ class Item {
   }
 
   static getAll(): Promise<Item[]> {
-    return new Promise<Item[]>((resolve, reject) => {
-      setTimeout(() => resolve(Item.dummy), 1000);
+    return new Promise<Item[]>(async (resolve, reject) => {
+      try {
+        const res = await Axios.get(`${url}/allItem`);
+        if (res.data) {
+          const items = res.data.map((item: any) => {
+            return new Item(item.IDItem, item.nameItem, item.price, item.weight);
+          });
+          resolve(items);
+        }
+      } catch (e) {
+        reject(e);
+      }
     })
   }
 }

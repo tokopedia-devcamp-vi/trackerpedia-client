@@ -1,10 +1,11 @@
-import { Card, CardContent, Divider, List, Typography } from '@material-ui/core';
+import { Card, CardContent, Divider, List, Typography, ListItem } from '@material-ui/core';
 import { WithStyles, withStyles } from '@material-ui/styles';
 import OrderModel, { OrderStatus } from 'models/Order';
 import React from 'react';
 import { Redirect } from 'react-router';
 import OrderCard from './OrderCard';
 import { styles } from './Orders-styles';
+import RoutePaths from 'routes/routes';
 
 type Props = WithStyles<typeof styles> & {}
 
@@ -24,6 +25,8 @@ class Order extends React.Component<Props, State>{
   }
 
   async componentDidMount() {
+    if (this.state.orders) return;
+
     this.setState({ loading: true });
     const orders = await OrderModel.getAll();
     this.setState({ loading: false, orders });
@@ -34,11 +37,11 @@ class Order extends React.Component<Props, State>{
     const { classes } = this.props;
 
     if (role === 'driver') {
-      return <Redirect to='/delivery' />
+      return <Redirect to={RoutePaths.DELIVERY} />
     }
 
     if (this.state.loading) {
-      return <div>Loading</div>
+      return <Typography>Loading...</Typography>
     }
 
     const { orders } = this.state;
@@ -68,6 +71,9 @@ class Order extends React.Component<Props, State>{
               <Typography variant="h6"><strong>{card.title}</strong></Typography>
             </CardContent>
             <List>
+              {card.orders.length === 0 && 
+                <ListItem>No orders</ListItem>
+              }
               {card.orders.map((order, idx) => (
                 <React.Fragment key={idx}>
                   {idx > 0 && <Divider />}

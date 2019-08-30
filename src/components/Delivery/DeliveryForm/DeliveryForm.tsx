@@ -2,7 +2,7 @@ import { Button, Card, CardContent, Typography } from '@material-ui/core';
 import Checkmark from '@material-ui/icons/CheckOutlined';
 import { WithStyles, withStyles } from '@material-ui/styles';
 import OrderDetails from 'components/OrderDetailCard';
-import { Order } from 'models';
+import { Order, Delivery } from 'models';
 import React from 'react';
 import { styles } from './DeliveryForm-styles';
 import ReceiptInput from './ReceiptInput';
@@ -33,6 +33,13 @@ class DeliveryForm extends React.Component<Props, State> {
     this.setState({ loading: false, order });
   }
 
+  async onDeliver() {
+    const { order } = this.state;
+    if (!order) return;
+    const res = await Delivery.createNew(order.id);
+    if (res) window.location.reload();
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -49,7 +56,7 @@ class DeliveryForm extends React.Component<Props, State> {
           </Card>}
         <Button
           variant="contained" color="secondary" className={classes.button}
-          disabled={!this.state.order || this.state.loading}>
+          disabled={!this.state.order || this.state.loading} onClick={this.onDeliver.bind(this)}>
           <Checkmark fontSize={"small"} style={{ marginRight: 8 }} />Accept order
         </Button>
       </div>

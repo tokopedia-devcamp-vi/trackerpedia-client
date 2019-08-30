@@ -1,4 +1,5 @@
 import { createMuiTheme, CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,8 +10,10 @@ const Root: React.FC = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <CssBaseline />
-        <App />
+        <SnackbarProvider>
+          <CssBaseline />
+          <App />
+        </SnackbarProvider>
       </BrowserRouter>
     </MuiThemeProvider>
   );

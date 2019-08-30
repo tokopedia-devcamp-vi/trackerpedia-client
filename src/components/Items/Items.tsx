@@ -1,10 +1,11 @@
 import { Typography } from '@material-ui/core';
-import { Item } from 'models';
+import { Item, Order } from 'models';
+import { withSnackbar, WithSnackbarProps } from 'notistack';
 import numeral from 'numeral';
 import React from 'react';
 import ItemCard from './ItemCard';
 
-interface Props { }
+type Props = WithSnackbarProps & {}
 
 interface State {
   loading: boolean;
@@ -26,6 +27,25 @@ class Items extends React.Component<Props, State> {
     this.setState({ loading: false, items });
   }
 
+  async orderItem(id: number) {
+    try {
+      const result = await Order.placeNew(id);
+      if(result) {
+        this.props.enqueueSnackbar('Order successfully placed', {
+          variant: 'success',
+          anchorOrigin: {
+            vertical: 'top',
+            horizontal: 'center',
+          }
+        });
+      }
+    } catch (e) {
+      this.props.enqueueSnackbar(e.message, {
+        variant: 'error',
+      });
+    }
+  }
+
   render() {
     if(this.state.loading) {
       return <Typography>Loading items...</Typography>
@@ -40,10 +60,11 @@ class Items extends React.Component<Props, State> {
         key={idx}
         id={item.id}
         name={item.name}
-        price={numeral(item.price).format('$ 0,0')}
+        price={'Rp ' + numeral(item.price).format('0,0')}
+        onClick={this.orderItem.bind(this)}
       />
     ));
   }
 }
 
-export default Items;
+export default withSnackbar(Items);

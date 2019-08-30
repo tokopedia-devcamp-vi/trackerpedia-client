@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 import { styles } from './Delivery-styles';
 import DeliveryForm from './DeliveryForm';
 import DeliveryStatus from './DeliveryStatus';
+import RoutePaths from 'routes/routes';
 
 type Props = WithStyles<typeof styles> & {
 
@@ -30,14 +31,17 @@ class Delivery extends React.Component<Props, State> {
   }
 
   async componentDidMount() {
-    const delivery = await DeliveryModel.getActive();
-    this.setState({ loading: false, delivery });
+    try {
+      const delivery = await DeliveryModel.getActive();
+      this.setState({ loading: false, delivery });
+    } catch (e) {
+    }
   }
 
   render() {
     const { role } = this.context;
     if (role !== 'driver') {
-      return <Redirect to="/order" />
+      return <Redirect to={RoutePaths.ORDERS} />
     }
 
     if (this.state.loading) {
@@ -50,7 +54,7 @@ class Delivery extends React.Component<Props, State> {
       return <DeliveryForm />
     }
 
-    return <DeliveryStatus delivery={delivery}/>
+    return <DeliveryStatus delivery={delivery} />
   }
 }
 

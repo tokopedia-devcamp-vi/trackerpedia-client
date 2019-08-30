@@ -1,45 +1,80 @@
+import Axios from "axios";
 import { Order } from "models";
-import Item from "./Item";
-import { OrderStatus } from "./Order";
+import { url } from "utils/config";
 
 class Delivery {
   order: Order;
-  cities: {city: string, time: Date}[];
+  cities: { city: string, time: Date, next?: boolean }[];
 
-  constructor(order: Order, cities: {city: string, time: Date}[]) {
+  constructor(order: Order, cities: { city: string, time: Date }[]) {
     this.order = order;
     this.cities = cities;
   }
 
   static getActive(): Promise<Delivery | null | undefined> {
-    return new Promise((resolve, reject) => {
-      const order = new Order(123, Item.dummy[0], "A very long address; an abnormally long address", OrderStatus.PENDING, new Date());
-      const delivery = new Delivery(order, [
-        {city: "Jepara", time: new Date()},
-        {city: "Demak", time: new Date()},
-        {city: "Semarang", time: new Date()},
-        {city: "Depok", time: new Date()},
-        {city: "Jakarta", time: new Date()},
-      ]);
-      setTimeout(() => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let res = await Axios.get(`${url}/order_sent`);
+        if (!res.data) {
+          resolve(null);
+          return;
+        }
+        const orderId = res.data[0].idOrder;
+        const order = await Order.getById(orderId);
+        res = await Axios.get(`${url}/tracker/${orderId}`);
+        const delivery = new Delivery(order!, res.data.map((city: any) => ({
+          city: city.city,
+          time: new Date(city.time),
+          next: city.next,
+        })));
         resolve(delivery);
-      }, 1000);
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
   static getById(id: string): Promise<Delivery | null | undefined> {
-    return new Promise((resolve, reject) => {
-      const order = new Order(parseInt(id), Item.dummy[0], "A very long address; an abnormally long address", OrderStatus.SENT, new Date());
-      const delivery = new Delivery(order, [
-        {city: "Jepara", time: new Date()},
-        {city: "Demak", time: new Date()},
-        {city: "Semarang", time: new Date()},
-        {city: "Depok", time: new Date()},
-        {city: "Jakarta", time: new Date()},
-      ]);
-      setTimeout(() => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const order = await Order.getById(id);
+        const res = await Axios.get(`${url}/tracker/${id}`);
+        const delivery = new Delivery(order!, res.data.map((city: any) => ({
+          city: city.city,
+          time: new Date(city.time),
+          next: city.next,
+        })));
         resolve(delivery);
-      }, 1000);
+      } catch (e) {
+        reject(e);
+      }
+    })
+  }
+
+  static updateById(id: number): Promise<boolean> {
+    return new Promise(async(resolve, reject) => {
+      try { 
+        const res = await Axios.post(`${url}/tracker`, {
+          idResi: id
+        });
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
+    })
+  }
+
+  static createNew(id: number): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await Axios.post(`${url}/newDelivery`, {
+          idResi: id,
+        });
+        console.log(res);
+        resolve(true);
+      } catch (e) {
+        reject(e);
+      }
     })
   }
 }

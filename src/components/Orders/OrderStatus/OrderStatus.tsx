@@ -12,10 +12,14 @@ interface State { }
 
 class OrderStatus extends React.Component<Props, State> {
   render() {
-    const { classes } = this.props;
+    const { classes, status } = this.props;
     return (
       <Card className={classes.root}>
-        <Stepper activeStep={1} alternativeLabel>
+        <Stepper activeStep={
+          status === Status.PENDING ? 0:
+          status === Status.SENT ? 1:
+          status === Status.DELIVERED ? 3: -1
+        } alternativeLabel>
           <Step>
             <StepLabel>Pending</StepLabel>
           </Step>
