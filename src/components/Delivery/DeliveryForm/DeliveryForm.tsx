@@ -1,11 +1,11 @@
-import React from 'react';
+import { Button, Card, CardContent, Typography } from '@material-ui/core';
+import Checkmark from '@material-ui/icons/CheckOutlined';
 import { WithStyles, withStyles } from '@material-ui/styles';
-import { styles } from './DeliveryForm-styles';
-import ReceiptInput from './ReceiptInput';
 import OrderDetails from 'components/OrderDetails';
 import { Order } from 'models';
-import { Button, Typography, Card, CardContent } from '@material-ui/core';
-import Checkmark from '@material-ui/icons/CheckOutlined';
+import React from 'react';
+import { styles } from './DeliveryForm-styles';
+import ReceiptInput from './ReceiptInput';
 
 type Props = WithStyles<typeof styles> & {
   onSubmit?: () => void;

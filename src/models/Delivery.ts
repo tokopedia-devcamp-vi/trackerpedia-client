@@ -1,18 +1,28 @@
-class Delivery {
-  id: number;
-  cities: string[];
-  current: number;
+import { Order } from "models";
+import Item from "./Item";
+import { OrderStatus } from "./Order";
 
-  constructor(id: number, cities: string[], current: number) {
-    this.id = id;
+class Delivery {
+  order: Order;
+  cities: {city: string, time: Date}[];
+
+  constructor(order: Order, cities: {city: string, time: Date}[]) {
+    this.order = order;
     this.cities = cities;
-    this.current = current;
   }
 
   static getActive(): Promise<Delivery | null | undefined> {
     return new Promise((resolve, reject) => {
+      const order = new Order(123, Item.dummy[0], "A very long address; an abnormally long address", OrderStatus.PENDING, new Date());
+      const delivery = new Delivery(order, [
+        {city: "Jepara", time: new Date()},
+        {city: "Demak", time: new Date()},
+        {city: "Semarang", time: new Date()},
+        {city: "Depok", time: new Date()},
+        {city: "Jakarta", time: new Date()},
+      ]);
       setTimeout(() => {
-        resolve(null);
+        resolve(delivery);
       }, 1000);
     });
   }

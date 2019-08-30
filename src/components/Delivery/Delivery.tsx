@@ -6,6 +6,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { styles } from './Delivery-styles';
 import DeliveryForm from './DeliveryForm';
+import DeliveryStatus from './DeliveryStatus';
 
 type Props = WithStyles<typeof styles> & {
 
@@ -49,7 +50,7 @@ class Delivery extends React.Component<Props, State> {
       return <DeliveryForm />
     }
 
-    return <div>Delivery</div>
+    return <DeliveryStatus delivery={delivery}/>
   }
 }
 
