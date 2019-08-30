@@ -1,8 +1,9 @@
+import { createMuiTheme, CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import React from 'react';
-import App from './App';
-import { CssBaseline, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-import "typeface-nunito-sans";
+import 'react-perfect-scrollbar/dist/css/styles.css';
 import { BrowserRouter } from 'react-router-dom';
+import "typeface-nunito-sans";
+import App from './App';
 
 const Root: React.FC = () => {
   return (

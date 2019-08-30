@@ -8,6 +8,7 @@ import Profile from 'components/Profile';
 const Routes: React.FC = () => (
   <Switch>
     <Route path={RoutePaths.ORDER} component={Order} />
+    <Route path={RoutePaths.DELIVERY} component={Order} />
     <Route path={RoutePaths.ITEMS} component={Items} />
     <Route path={RoutePaths.PROFILE} component={Profile} />
   </Switch>

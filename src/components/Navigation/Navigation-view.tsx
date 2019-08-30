@@ -18,23 +18,29 @@ interface State {
 
 class Navigation extends React.Component<Props, State> {
   static contextType = UserContext;
-  
+
   constructor(props: Props) {
     super(props);
 
+    const path = this.props.location.pathname.slice(1);
     this.state = {
-      active: this.props.location.pathname.slice(1),
+      active: path,
     }
   }
 
   onNavigate(_: any, newValue: string) {
     this.setState({ active: newValue });
+    const { role } = this.context;
+    console.log(role);
     switch (newValue) {
       case "items":
         this.props.redirectTo(RoutePaths.ITEMS);
         break;
       case "order":
         this.props.redirectTo(RoutePaths.ORDER);
+        break;
+      case "delivery":
+        this.props.redirectTo(RoutePaths.DELIVERY);
         break;
       case "profile":
         this.props.redirectTo(RoutePaths.PROFILE);
@@ -43,17 +49,20 @@ class Navigation extends React.Component<Props, State> {
   }
 
   render() {
-
+    const { role } = this.context;
     const { classes } = this.props;
     return (
       <BottomNavigation
         showLabels
         onChange={this.onNavigate.bind(this)}
-        className={classes.root}
+        // className={classes.root}
         value={this.state.active}
       >
         <BottomNavigationAction value={"items"} label={"Items"} icon={<Items />} />
-        <BottomNavigationAction value={"order"} label={"Deliveries"} icon={<Deliver />} />
+        {role === 'driver' ?
+          <BottomNavigationAction value={"delivery"} label={"Delivery"} icon={<Deliver />} /> :
+          <BottomNavigationAction value={"order"} label={"Order"} icon={<Deliver />} />
+        }
         <BottomNavigationAction value={"profile"} label={"Profile"} icon={<Settings />} />
       </BottomNavigation>
     )

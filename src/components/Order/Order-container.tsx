@@ -1,12 +1,12 @@
 import React from 'react';
-import Delivery from 'models/Delivery';
+import OrderModel from 'models/Order';
 import OrdersView from './Order-view';
 
 interface Props {}
 
 interface State {
   loading: boolean,
-  deliveries: Delivery[]
+  order: OrderModel | null,
 }
 
 class Order extends React.Component<Props, State>{
@@ -14,14 +14,21 @@ class Order extends React.Component<Props, State>{
     super(props);
 
     this.state = {
-      loading: false,
-      deliveries: [],
+      loading: true,
+      order: null,
     }
+  }
+
+  componentDidMount() {
+
   }
 
   render() {
     return (
-      <OrdersView />
+      <OrdersView
+        loading={this.state.loading}
+        order={this.state.order}
+      />
     );
   }
 }

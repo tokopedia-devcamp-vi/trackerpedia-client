@@ -1,3 +1,4 @@
-export {
-  default as Delivery
-} from './Delivery';
+import Item from './Item';
+import Order from './Order';
+
+export { Item, Order }
