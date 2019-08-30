@@ -39,6 +39,11 @@ class Delivery {
       try {
         const order = await Order.getById(id);
         const res = await Axios.get(`${url}/tracker/${id}`);
+        if(!res.data || res.data ==  null) {
+          const delivery = new Delivery(order!, []);
+          resolve(delivery);
+          return;
+        }
         const delivery = new Delivery(order!, res.data.map((city: any) => ({
           city: city.city,
           time: new Date(city.time),
