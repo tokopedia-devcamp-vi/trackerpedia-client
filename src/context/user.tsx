@@ -12,7 +12,7 @@ class UserProvider extends React.Component {
     super(props);
 
     this.state = {
-      role: 'driver',
+      role: 'buyer',
       switchToBuyer: this.switchToBuyer.bind(this),
       switchToDriver: this.switchToDriver.bind(this),
     }

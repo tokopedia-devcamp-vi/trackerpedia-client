@@ -43,6 +43,9 @@ const theme = createMuiTheme({
   },
   overrides: {
     MuiBottomNavigationAction: {
+      root: {
+        maxWidth: 'none',
+      },
       label: {
         '&.Mui-selected': {
           fontSize: '0.75rem'

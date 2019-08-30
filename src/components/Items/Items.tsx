@@ -35,14 +35,14 @@ class Items extends React.Component<Props, State> {
     if(!items) {
       return <Typography>Cannot load items</Typography>
     }
-    return items.map((item, idx) => {
-      return <ItemCard
+    return items.map((item, idx) => (
+      <ItemCard
         key={idx}
         id={item.id}
         name={item.name}
         price={numeral(item.price).format('$ 0,0')}
       />
-    });
+    ));
   }
 }
 

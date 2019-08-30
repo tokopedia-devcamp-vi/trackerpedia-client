@@ -1,5 +1,5 @@
 enum RoutePaths {
-  ORDER = '/order',
+  ORDERS = '/orders',
   DELIVERY = '/delivery',
   ITEMS = '/items',
   PROFILE = '/profile',

@@ -2,11 +2,12 @@ import { BottomNavigation, BottomNavigationAction, withStyles, WithStyles } from
 import Deliver from '@material-ui/icons/LocalShippingOutlined';
 import Settings from '@material-ui/icons/Settings';
 import Items from '@material-ui/icons/ShoppingBasketOutlined';
+import OrdersIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { UserContext } from 'context/user';
 import React from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 import RoutePaths from 'routes/routes';
 import { styles } from './Navigation-styles';
-import { RouteComponentProps, withRouter } from 'react-router';
 
 type Props = WithStyles<typeof styles> & RouteComponentProps<{}> & {
   redirectTo: (path: string) => void;
@@ -43,8 +44,8 @@ class Navigation extends React.Component<Props, State> {
       case "items":
         this.props.redirectTo(RoutePaths.ITEMS);
         break;
-      case "order":
-        this.props.redirectTo(RoutePaths.ORDER);
+      case "orders":
+        this.props.redirectTo(RoutePaths.ORDERS);
         break;
       case "delivery":
         this.props.redirectTo(RoutePaths.DELIVERY);
@@ -63,10 +64,10 @@ class Navigation extends React.Component<Props, State> {
         onChange={this.onNavigate.bind(this)}
         value={this.state.active}
       >
-        <BottomNavigationAction value={"items"} label={"Items"} icon={<Items />} />
+        {role !== 'driver' && <BottomNavigationAction value={"items"} label={"Items"} icon={<Items />} />}
         {role === 'driver' ?
           <BottomNavigationAction value={"delivery"} label={"Delivery"} icon={<Deliver />} /> :
-          <BottomNavigationAction value={"order"} label={"Order"} icon={<Deliver />} />
+          <BottomNavigationAction value={"orders"} label={"Orders"} icon={<OrdersIcon />} />
         }
         <BottomNavigationAction value={"profile"} label={"Profile"} icon={<Settings />} />
       </BottomNavigation>
