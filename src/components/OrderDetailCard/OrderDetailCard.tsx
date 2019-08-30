@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithStyles, withStyles } from '@material-ui/styles';
-import { styles } from './OrderDetails-styles';
+import { styles } from './OrderDetailCard-styles';
 import { Card, CardContent, Typography, Grid } from '@material-ui/core';
 import { Order } from 'models';
 

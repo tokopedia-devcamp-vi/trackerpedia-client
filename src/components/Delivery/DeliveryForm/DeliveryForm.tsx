@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Typography } from '@material-ui/core';
 import Checkmark from '@material-ui/icons/CheckOutlined';
 import { WithStyles, withStyles } from '@material-ui/styles';
-import OrderDetails from 'components/OrderDetails';
+import OrderDetails from 'components/OrderDetailCard';
 import { Order } from 'models';
 import React from 'react';
 import { styles } from './DeliveryForm-styles';

@@ -23,7 +23,7 @@ class Navigation extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const path = this.props.location.pathname.slice(1);
+    const path = props.location.pathname.split('/')[1];
     this.state = {
       active: path,
     }
@@ -31,7 +31,7 @@ class Navigation extends React.Component<Props, State> {
 
   static getDerivedStateFromProps(props: Props, state: State) {
     if (!props.location) return state;
-    const path = props.location.pathname.slice(1);
+    const path = props.location.pathname.split('/')[1];
     if (state.active === path) return state;
     return { ...state, active: path };
   }

@@ -50,13 +50,13 @@ class Order extends React.Component<Props, State>{
     const orderDictionaries: { title: string, orders: OrderModel[] }[] = [
       {
         title: "ON THE WAY",
-        orders: orders.filter(order => order.status === OrderStatus.DELIVERED),
-      }, {
-        title: "PENDING",
         orders: orders.filter(order => order.status === OrderStatus.SENT),
       }, {
-        title: "COMPLETED",
+        title: "PENDING",
         orders: orders.filter(order => order.status === OrderStatus.PENDING),
+      }, {
+        title: "COMPLETED",
+        orders: orders.filter(order => order.status === OrderStatus.DELIVERED),
       }
     ];
 
