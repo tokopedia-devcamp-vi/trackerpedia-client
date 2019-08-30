@@ -4,11 +4,12 @@ import RoutePaths from './routes';
 import Order from 'components/Order';
 import Items from 'components/Items';
 import Profile from 'components/Profile';
+import Delivery from 'components/Delivery';
 
 const Routes: React.FC = () => (
   <Switch>
     <Route path={RoutePaths.ORDER} component={Order} />
-    <Route path={RoutePaths.DELIVERY} component={Order} />
+    <Route path={RoutePaths.DELIVERY} component={Delivery} />
     <Route path={RoutePaths.ITEMS} component={Items} />
     <Route path={RoutePaths.PROFILE} component={Profile} />
   </Switch>

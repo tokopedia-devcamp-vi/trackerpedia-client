@@ -11,7 +11,7 @@ class Topbar extends React.Component<Props> {
   render() {
     const { classes } = this.props;
     return (
-      <AppBar position="static">
+      <AppBar position="static" color="inherit" className={classes.root} elevation={2}>
         <Toolbar>
           <Typography variant={"h6"} className={classes.heading}>
             <span style={{ fontWeight: 'normal' }}>Trackerpedia > </span>{this.props.title}

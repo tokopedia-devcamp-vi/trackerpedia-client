@@ -14,21 +14,16 @@ type Props = WithStyles<typeof styles> & {
 }
 
 class ItemCard extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   render() {
-    const { classes } = this.props;
-    const { name, price, imageUrl, onClick } = this.props;
+    const { classes, onClick, ...item } = this.props;
     return (
       <Card className={classes.root}>
         <CardContent className={classes.content}>
-          <Typography variant="body2" className={classes.itemName} gutterBottom>{name}</Typography>
-          <Typography>{price}</Typography>
+          <Typography variant="body2" className={classes.itemName} gutterBottom>{item.name}</Typography>
+          <Typography>{item.price}</Typography>
         </CardContent>
         <CardContent className={clsx(classes.content, classes.buttonContainer)}>
-          <Button variant={"contained"} color={"secondary"}>
+          <Button variant={"contained"} color={"secondary"} onClick={onClick && (() => onClick(item.id))}>
             <OrderIcon fontSize={"small"} style={{ marginRight: 8 }}/> Order
           </Button>
         </CardContent>

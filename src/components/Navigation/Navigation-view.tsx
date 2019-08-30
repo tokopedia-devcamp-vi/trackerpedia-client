@@ -28,6 +28,13 @@ class Navigation extends React.Component<Props, State> {
     }
   }
 
+  static getDerivedStateFromProps(props: Props, state: State) {
+    if (!props.location) return state;
+    const path = props.location.pathname.slice(1);
+    if (state.active === path) return state;
+    return { ...state, active: path };
+  }
+
   onNavigate(_: any, newValue: string) {
     this.setState({ active: newValue });
     const { role } = this.context;
@@ -50,12 +57,10 @@ class Navigation extends React.Component<Props, State> {
 
   render() {
     const { role } = this.context;
-    const { classes } = this.props;
     return (
       <BottomNavigation
         showLabels
         onChange={this.onNavigate.bind(this)}
-        // className={classes.root}
         value={this.state.active}
       >
         <BottomNavigationAction value={"items"} label={"Items"} icon={<Items />} />

@@ -38,6 +38,7 @@ const theme = createMuiTheme({
     },
     primary: {
       main: '#42b549',
+      contrastText: '#fff',
     },
   },
   overrides: {
